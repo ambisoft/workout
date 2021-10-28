@@ -8,12 +8,10 @@ const StravaConnect = () => {
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
-    if (code && !activities) {
+    if (code) {
       Api.Strava.authorize(code).then(resp => {
         const token = resp.data.access_token;
-        Api.Strava.activities(token).then(resp => {
-          setActivities(resp.data);
-        });
+        Api.Strava.activities(token).then(resp => setActivities(resp.data));
       });
     }
   }, []);
