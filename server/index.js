@@ -1,5 +1,6 @@
 const cors = require('cors');
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3001;
@@ -24,8 +25,17 @@ app.get("/api/ping", (req, res) => {
 
 // serve static React frontend
 app.get('*', (req, res) => {
-  console.log(__dirname);
-  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+  const url = req.url;
+  let filePath = url.replace(new RegExp('^/'), '');
+  if (filePath === '') {
+    filePath = 'index.html';
+  }
+  const fullPath = path.resolve(__dirname, '../build', filePath);
+  if (fs.existsSync(fullPath)) {
+    res.sendFile(fullPath);
+  } else {
+    res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+  }
 });
 
 app.listen(PORT, () => {
