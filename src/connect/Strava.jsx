@@ -16,7 +16,7 @@ const StravaConnect = () => {
         });
       });
     }
-  });
+  }, []);
 
   return (
     <section>
