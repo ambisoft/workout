@@ -18,7 +18,7 @@ const StravaConnect = () => {
 
   return (
     <section>
-      <h1>Latest Activities</h1>
+      <h1>Latest Strava Activities</h1>
       {activities && (
         <ul>
           {activities.map(activity => (

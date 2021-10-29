@@ -1,23 +1,9 @@
 import React, { useEffect } from "react";
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 
 import Api from '../api';
-
-const CONFIG = {
-  STRAVA: {
-    base: 'https://www.strava.com/oauth/authorize',
-    client_id: process.env.REACT_APP_STRAVA_CLIENT_ID,
-    redirect_uri: `${window.location.origin}/connect/strava`,
-    scope: 'activity:read'
-  },
-
-  POLAR: {
-    base: 'https://flow.polar.com/oauth2/authorization',
-    client_id: process.env.REACT_APP_POLAR_CLIENT_ID,
-    redirect_uri: `${window.location.origin}/connect/polar`,
-    scope: 'accesslink.read_all'
-  }
-};
+import Config from './config';
 
 function buildURL(config) {
   const params = [
@@ -35,19 +21,23 @@ const Connect = () => {
   });
 
   const urls = {
-    polar: buildURL(CONFIG.POLAR),
-    strava: buildURL(CONFIG.STRAVA)
+    polar: buildURL(Config.POLAR),
+    strava: buildURL(Config.STRAVA)
   }
 
   return (
-    <div>
-      <Button component={'a'} href={urls.strava} variant="contained" size='large'>
-        Connect Strava
-      </Button>
-      <Button style={{opacity: 0}} component={'a'} href={urls.polar} variant="contained" size='large'>
-        Connect Polar
-      </Button>
-    </div>
+    <Grid container spacing={2} style={{ minHeight: '100vh' }} alignItems="center" justifyContent="center">
+      <Grid item>
+        <Button component={'a'} href={urls.strava} variant="contained" size='large'>
+          Connect Strava
+        </Button>
+      </Grid>
+      <Grid item>
+        <Button component={'a'} href={urls.polar} variant="contained" size='large'>
+          Connect Polar
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 

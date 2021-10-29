@@ -3,6 +3,8 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
+const Polar = require('../src/api/Polar').default;
+
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -18,9 +20,61 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(express.json());
+
+const knex = require('knex')(require('./knexfile').default);
 
 app.get("/api/ping", (req, res) => {
   res.json({ message: "Hello from server!" });
+});
+
+app.post("/api/connect/polar/authorize", async (req, res) => {
+  const code = req.body.code;
+  const redirect_uri = req.body.redirect_uri;
+  const resp = await Polar.authorize(code, redirect_uri);
+  res.send(resp.data);
+});
+
+app.post("/api/connect/polar/exercises", async (req, res) => {
+  const access_token = req.body.access_token;
+  try {
+    console.log('call .exercises');
+    const resp = await Polar.exercises(access_token);
+    console.log('exercises resp:', resp);
+    res.send(resp.data);
+  } catch (e) {
+    console.log('error:', e);
+    return;
+  }
+});
+
+app.post("/api/connect/polar/activities", async (req, res) => {
+  const access_token = req.body.access_token;
+  const user_id = req.body.user_id;
+
+  // Step 1: register the user - if not registered
+  // TODO: check if the user is registered
+  // Step 2: create a transaction
+  // Step 3: get activity data
+
+  /*
+  try {
+    const resp = await Polar.registerUser(access_token, user_id);
+    console.log('resp:', resp);
+  } catch (e) {
+    console.log('error:', e);
+    return;
+  }
+  */
+
+  try {
+    const resp = await Polar.activities(access_token, user_id);
+    console.log('transaction create:', resp);
+    res.send(resp.data);
+  } catch (e) {
+    console.log('error:', e);
+    return;
+  }
 });
 
 // serve static React frontend
