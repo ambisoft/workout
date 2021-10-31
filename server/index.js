@@ -33,7 +33,7 @@ app.get("/api/ping", (req, res) => {
 });
 
 app.get("/api/me", auth, async (req, res) => {
-  const user = req.user || {};
+  const user = req.user;
   res.send({
     guid: user.guid,
     first_name: user.first_name,

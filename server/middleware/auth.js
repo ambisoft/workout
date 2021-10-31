@@ -16,6 +16,9 @@ const verifyToken = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const guid = decoded.user_id;
     const user = await knex.select('*').table('users').where({ guid }).first();
+    if (!user) {
+      return res.status(401).send({ error: "Invalid token" });
+    }
     req.user = user;
   } catch (err) {
     return res.status(401).send({ error: "Invalid token" });
