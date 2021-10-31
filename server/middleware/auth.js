@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const knex = require('knex')(require('../knexfile').default);
 
 const fromHeaders = (headers) => {
   const authorization = headers.authorization || '';
@@ -15,7 +14,7 @@ const verifyToken = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const guid = decoded.user_id;
-    const user = await knex.select('*').table('users').where({ guid }).first();
+    const user = await req.knex.select('*').table('users').where({ guid }).first();
     if (!user) {
       return res.status(401).send({ error: "Invalid token" });
     }

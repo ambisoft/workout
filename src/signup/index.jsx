@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
 import Api from '../api';

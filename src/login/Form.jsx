@@ -54,8 +54,7 @@ const Form = ({ error, onSubmit }) => {
             value={username.toLowerCase()}
             onChange={e => setUsername(e.target.value)}
             fullWidth
-            label="Email address"
-            placeholder='Email address' />
+            label="Email address" />
         </div>
         <div className='row'>
           <TextField
@@ -76,7 +75,11 @@ const Form = ({ error, onSubmit }) => {
           onClick={onSend}
           variant='contained'>Login</Button>
         <Box className='row' textAlign='center'>
-          <Link component={RouterLink} to='/signup'>Signup</Link>
+          Don’t have an account?
+          &nbsp;
+          <Link component={RouterLink} to='/signup' underline='hover'>
+            Get started
+          </Link>
         </Box>
       </Box>
     </Paper>
