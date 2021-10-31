@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 const styles = {
+  padding: '2em',
   '& .row': { mt: '1.5em' },
 };
 
