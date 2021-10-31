@@ -51,7 +51,7 @@ const Form = ({ error, onSubmit }) => {
           <TextField
             autoComplete="off"
             id='username'
-            value={username}
+            value={username.toLowerCase()}
             onChange={e => setUsername(e.target.value)}
             fullWidth
             label="Email address"

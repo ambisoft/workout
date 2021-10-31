@@ -10,6 +10,7 @@ const auth = require("./middleware/auth");
 const Polar = require('../src/api/Polar').default;
 
 const PORT = process.env.PORT || 3001;
+const PASSWORD_MIN_LENGTH = 6;
 const app = express();
 
 var whitelist = ['http://localhost:3000'];
@@ -44,10 +45,15 @@ app.get("/api/me", auth, async (req, res) => {
 app.post("/api/sessions", async (req, res) => {
   const { username, password } = req.body;
 
+  if (!username || !password) {
+    res.status(401).send({ error: "Email and password required" });
+    return;
+  }
+
   const user = await knex
     .select('*')
     .table('users')
-    .where({ username })
+    .where({ username: username.toLowerCase() })
     .first();
 
   if (user && (await bcrypt.compare(password, user.password))) {
@@ -70,17 +76,30 @@ app.post("/api/sessions", async (req, res) => {
 app.post("/api/users", async (req, res) => {
   const { username, password } = req.body;
 
-  // TODO: validate username (email)
-  // min length
-  // max length
-  // lowercase
-  
-  const exists = await knex.select('*').table('users').where({ username }).first();
+  if (!username) {
+    res.status(422).send({ error: "Email is required" });
+    return;
+  }
+  if (!password) {
+    res.status(422).send({ error: "Password is required" });
+    return;
+  }
+  if (password.length < PASSWORD_MIN_LENGTH) {
+    res.status(422).send({
+      error: `Password must be at least ${PASSWORD_MIN_LENGTH} characters long`
+    });
+    return;
+  }
+
+  const exists = await knex
+    .select('*')
+    .table('users')
+    .where({ username: username.toLowerCase() }).first();
   if (exists) {
-    res.status(409).send({ error: "Username already exists" });
+    res.status(409).send({ error: 'Email already exists' });
   } else {
     const encryptedPassword = await bcrypt.hash(password, 10);
-    const user = { username, password: encryptedPassword };
+    const user = { username: username.toLowerCase(), password: encryptedPassword };
     const guid = (await knex.insert(user).into('users').returning('guid'))[0];
     const token = jwt.sign(
       { user_id: guid },
