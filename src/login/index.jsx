@@ -18,7 +18,6 @@ const Login = () => {
 
   const onSubmit = (username, password) => {
     Api.sessions.create(username, password).then(resp => {
-      console.log('resp:', resp);
       if (resp.token) {
         if (resp.user) {
           Session.setUser(resp.user);

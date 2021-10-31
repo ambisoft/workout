@@ -44,11 +44,14 @@ const Api = {
   },
 
   me() {
+    const token = Tokens.get('workouts_token');
+    if (!token) {
+      return Promise.resolve(null);
+    }
     // TODO: extract "client"
     const options = { baseURL: API_URL };
     const client = axios.create(options);
     client.interceptors.request.use(request => {
-      const token = Tokens.get('workouts_token');
       if (token) {
         request.headers.common.Authorization = `Bearer ${token}`;
       }

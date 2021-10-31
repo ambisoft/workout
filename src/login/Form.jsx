@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from 'react-router-dom';
 
 import Alert from '@mui/material/Alert';
@@ -15,12 +15,18 @@ const styles = {
 
 const Form = ({ error, onSubmit }) => {
 
-  const onClick = (e) => {
-    const form = e.currentTarget.form;
-    const email = form.querySelector('#username').value;
-    const password = form.querySelector('#pwd').value;
-    if ((email !== '') && (password !== '')) {
-      onSubmit(email, password);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onSend = () => {
+    if ((username !== '') && (password !== '')) {
+      onSubmit(username, password);
+    }
+  };
+
+  const onKeyUp = (e) => {
+    if (e.key === 'Enter') {
+      onSend();
     }
   };
 
@@ -45,6 +51,8 @@ const Form = ({ error, onSubmit }) => {
           <TextField
             autoComplete="off"
             id='username'
+            value={username}
+            onChange={e => setUsername(e.target.value)}
             fullWidth
             label="Email address"
             placeholder='Email address' />
@@ -54,6 +62,9 @@ const Form = ({ error, onSubmit }) => {
             fullWidth
             autoComplete='new-password'
             id='pwd'
+            onKeyUp={onKeyUp}
+            value={password}
+            onChange={e => setPassword(e.target.value)}
             type='password'
             label="Password" />
         </div>
@@ -62,8 +73,8 @@ const Form = ({ error, onSubmit }) => {
           size='large'
           fullWidth
           color='success'
-          variant='contained'
-          onClick={onClick}>Login</Button>
+          onClick={onSend}
+          variant='contained'>Login</Button>
         <Box className='row' textAlign='center'>
           <Link component={RouterLink} to='/signup'>Signup</Link>
         </Box>
