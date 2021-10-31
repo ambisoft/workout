@@ -1,7 +1,11 @@
+const bcrypt = require('bcrypt');
 const cors = require('cors');
 const express = require('express');
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
 const path = require('path');
+
+const auth = require("./middleware/auth");
 
 const Polar = require('../src/api/Polar').default;
 
@@ -26,6 +30,39 @@ const knex = require('knex')(require('./knexfile').default);
 
 app.get("/api/ping", (req, res) => {
   res.json({ message: "Hello from server!" });
+});
+
+app.get("/api/me", auth, async (req, res) => {
+  const user = req.user || {};
+  res.send({
+    guid: user.guid,
+    first_name: user.first_name,
+    last_name: user.last_name
+  });
+});
+
+app.post("/api/sessions", async (req, res) => {
+  const { username, password } = req.body;
+
+  // TODO: validate username (email)
+  // min length
+  // max length
+  // lowercase
+  
+  const exists = await knex.select('*').table('users').where({ username }).first();
+  if (exists) {
+    res.status(409).send({ error: "Username already exists" });
+  } else {
+    const encryptedPassword = await bcrypt.hash(password, 10);
+    const user = { username, password: encryptedPassword };
+    const guid = (await knex.insert(user).into('users').returning('guid'))[0];
+    const token = jwt.sign(
+      { user_id: guid },
+      process.env.JWT_SECRET,
+      { expiresIn: "30d" }
+    );
+    res.send({ guid, token });
+  }
 });
 
 app.post("/api/connect/polar/authorize", async (req, res) => {

@@ -1,17 +1,25 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { ThemeProvider } from '@mui/material/styles';
+
+import welcomeTheme from './themes/welcome';
 
 const Home = () => (
-  <header className="App-header">
-    <h1>Run Forrest Run</h1>
+  <ThemeProvider theme={welcomeTheme}>
+  <div className="welcome">
+    <Typography variant='h1'>
+      Run Forrest Run
+    </Typography>
     <img src='/logo.png' alt='Running man logo' />
     <p>
       <Button component={Link} to='/join' variant="contained" color='success' size='large'>
         Join Beta
       </Button>
     </p>
-  </header>
+  </div>
+  </ThemeProvider>
 );
 
 export default Home;
