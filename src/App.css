@@ -3,10 +3,6 @@ body {
   padding: 0;
 }
 
-.app {
-  margin-top: 2em;
-}
-
 .welcome {
   background-color: #282c34;
   min-height: 100vh;

@@ -37,7 +37,7 @@ const Login = () => {
     return <Redirect to='/dashboard'></Redirect>;
   }
   return (
-    <Container maxWidth='sm'>
+    <Container maxWidth='sm' sx={{ mt: '2.5em'}}>
       <Form onSubmit={onSubmit} error={error}></Form>
     </Container>
   );
