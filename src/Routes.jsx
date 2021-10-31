@@ -6,7 +6,7 @@ import Dashboard from './Dashboard';
 import Home from './Home';
 import Join from './Join';
 import Login from './login';
-import Signup from './Signup';
+import Signup from './signup';
 
 import Connect from './connect';
 import PolarConnect from './connect/Polar';

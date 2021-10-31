@@ -44,6 +44,32 @@ app.get("/api/me", auth, async (req, res) => {
 app.post("/api/sessions", async (req, res) => {
   const { username, password } = req.body;
 
+  const user = await knex
+    .select('*')
+    .table('users')
+    .where({ username })
+    .first();
+
+  if (user && (await bcrypt.compare(password, user.password))) {
+    const token = jwt.sign(
+      { user_id: user.guid },
+      process.env.JWT_SECRET,
+      { expiresIn: "30d" }
+    );
+    const serialized = {
+      guid: user.guid,
+      first_name: user.first_name,
+      last_name: user.last_name
+    }
+    res.send({ guid: user.guid, token, user: serialized });
+  } else {
+    res.status(401).send({ error: "Login failed" });
+  }
+});
+
+app.post("/api/users", async (req, res) => {
+  const { username, password } = req.body;
+
   // TODO: validate username (email)
   // min length
   // max length
@@ -61,7 +87,12 @@ app.post("/api/sessions", async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "30d" }
     );
-    res.send({ guid, token });
+    const serialized = {
+      guid: user.guid,
+      first_name: user.first_name,
+      last_name: user.last_name
+    }
+    res.send({ guid, token, user: serialized });
   }
 });
 

@@ -4,7 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-import mainTheme from './themes/main';
+import mainTheme from './ui/themes/main';
 
 import './App.css';
 

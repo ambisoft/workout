@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
 
-import welcomeTheme from './themes/welcome';
+import welcomeTheme from './ui/themes/welcome';
 
 const Home = () => (
   <ThemeProvider theme={welcomeTheme}>

@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
 
-import welcomeTheme from './themes/welcome';
+import welcomeTheme from './ui/themes/welcome';
 
 const Join = () => (
   <ThemeProvider theme={welcomeTheme}>

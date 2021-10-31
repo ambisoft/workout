@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
 import Api from '../api';
 import Form from './Form';
 import Session from '../Session';
 
-const Login = () => {
+const Signup = () => {
 
   const [error, setError] = useState(false);
   const history = useHistory();
@@ -17,7 +18,7 @@ const Login = () => {
   const visitor = (user === null);
 
   const onSubmit = (username, password) => {
-    Api.sessions.create(username, password).then(resp => {
+    Api.users.create(username, password).then(resp => {
       console.log('resp:', resp);
       if (resp.token) {
         if (resp.user) {
@@ -25,8 +26,6 @@ const Login = () => {
         }
         history.push('/dashboard');
       }
-    }).catch(e => {
-      setError(true);
     });
   };
 
@@ -43,4 +42,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

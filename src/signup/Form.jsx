@@ -28,12 +28,12 @@ const Form = ({ error, onSubmit }) => {
     <Paper elevation={3}>
       <Box component="form" sx={styles} noValidate autoComplete="off">
         <Typography variant='h4'>
-          Sign in to GlobalRun
+          Sign up to GlobalRun
         </Typography>
 
         {error &&
         <Alert className='row' severity="error">
-            Invalid email or password
+            Registration error
         </Alert>}
 
         <div style={{ display: 'none' }}>
@@ -63,9 +63,9 @@ const Form = ({ error, onSubmit }) => {
           fullWidth
           color='success'
           variant='contained'
-          onClick={onClick}>Login</Button>
+          onClick={onClick}>Signup</Button>
         <Box className='row' textAlign='center'>
-          <Link component={RouterLink} to='/signup'>Signup</Link>
+          <Link component={RouterLink} to='/login'>Signin</Link>
         </Box>
       </Box>
     </Paper>
