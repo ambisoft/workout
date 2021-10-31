@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
+import Link from '@mui/material/Link';
 
 import Api from '../api';
 import Form from './Form';
 import Session from '../Session';
 
+const styles = {
+  mt: '1em',
+  '& form': { mt: '1em' }
+};
+
 const Signup = () => {
 
   const [error, setError] = useState('');
   const history = useHistory();
-
-  const user = Session.user;
-  const unknown = (user === undefined);
-  const visitor = (user === null);
 
   const onSubmit = (username, password) => {
     setError('');
@@ -30,14 +32,11 @@ const Signup = () => {
     });
   };
 
-  if (unknown) {
-    return null;
-  }
-  if (!visitor) {
-    return <Redirect to='/dashboard'></Redirect>;
-  }
   return (
-    <Container maxWidth='sm' sx={{ mt: '2.5em'}}>
+    <Container maxWidth='sm' sx={styles}>
+      <Link component={RouterLink} to='/' underline='hover'>
+        Home
+      </Link>
       <Form onSubmit={onSubmit} error={error}></Form>
     </Container>
   );

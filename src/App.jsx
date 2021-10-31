@@ -10,7 +10,7 @@ import './App.css';
 
 import Api from './api';
 import Firebase from './api/Firebase';
-import Routes from "./Routes";
+import Routes from "./routes";
 import Session from './Session';
 
 const App = () => {

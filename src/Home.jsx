@@ -8,17 +8,17 @@ import welcomeTheme from './ui/themes/welcome';
 
 const Home = () => (
   <ThemeProvider theme={welcomeTheme}>
-  <div className="welcome">
-    <Typography variant='h1'>
-      Run Forrest Run
-    </Typography>
-    <img src='/logo.png' alt='Running man logo' />
-    <p>
-      <Button component={Link} to='/join' variant="contained" color='success' size='large'>
-        Join Beta
-      </Button>
-    </p>
-  </div>
+    <div className="welcome">
+      <Typography variant='h1'>
+        Run Forrest Run
+      </Typography>
+      <img src='/logo.png' alt='Running man logo' />
+      <p>
+        <Button component={Link} to='/join' variant="contained" color='success' size='large'>
+          Join Beta
+        </Button>
+      </p>
+    </div>
   </ThemeProvider>
 );
 
