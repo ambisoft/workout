@@ -10,7 +10,7 @@ import Session from '../Session';
 
 const Signup = () => {
 
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
   const history = useHistory();
 
   const user = Session.user;
@@ -18,6 +18,7 @@ const Signup = () => {
   const visitor = (user === null);
 
   const onSubmit = (username, password) => {
+    setError('');
     Api.users.create(username, password).then(resp => {
       if (resp.token) {
         if (resp.user) {
@@ -25,6 +26,8 @@ const Signup = () => {
         }
         history.push('/dashboard');
       }
+    }).catch(e => {
+      setError(e.response.data.error);
     });
   };
 

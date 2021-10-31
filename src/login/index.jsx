@@ -17,6 +17,7 @@ const Login = () => {
   const visitor = (user === null);
 
   const onSubmit = (username, password) => {
+    setError('');
     Api.sessions.create(username, password).then(resp => {
       if (resp.token) {
         if (resp.user) {
