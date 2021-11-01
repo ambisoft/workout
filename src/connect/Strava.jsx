@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom';
+
 import Api from '../api';
 
 const StravaConnect = () => {
 
   const [activities, setActivities] = useState();
+  const history = useHistory();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
     if (code) {
-      Api.Strava.authorize(code).then(resp => {
-        const token = resp.data.access_token;
-        Api.Strava.activities(token).then(resp => setActivities(resp.data));
+      Api.local.Strava.authorize(code).then(resp => {
+        history.push('/dashboard');
+        //const token = resp.data.access_token;
+        //Api.Strava.activities(token).then(resp => setActivities(resp.data));
       });
     }
   }, []);

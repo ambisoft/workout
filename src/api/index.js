@@ -78,6 +78,12 @@ const Api = {
         const client = Client();
         return client.post('/connect/polar/exercises', { access_token });
       },
+    },
+    Strava: {
+      authorize(code) {
+        const client = Client();
+        return client.post('/connect/strava/authorize', { code });
+      },
     }
   },
   Polar,

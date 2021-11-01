@@ -5,6 +5,7 @@ const path = require('path');
 
 const database = require("./middleware/database");
 
+const ConnectStrava = require('./routes/connect/strava').default;
 const Sessions = require('./routes/sessions').default;
 const Sources = require('./routes/sources').default;
 const Users = require('./routes/users').default;
@@ -30,6 +31,7 @@ app.use(database);
 app.use(express.json());
 
 // application routes
+ConnectStrava(app);
 Sessions(app);
 Sources(app);
 Users(app);

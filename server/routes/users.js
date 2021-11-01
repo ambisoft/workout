@@ -47,7 +47,6 @@ const users = (app) => {
         first_name: user.first_name,
         last_name: user.last_name
       }
-      console.log('serialized:', serialized);
       res.send({ guid, token, user: serialized });
     }
   });
