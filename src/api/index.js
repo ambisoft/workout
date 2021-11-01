@@ -9,10 +9,25 @@ const local = window.location.origin.includes('localhost');
 const API_URL = local ? 'http://localhost:3001/api' : '/api';
 
 const Api = {
+
+  error(e) {
+    if (e.response) {
+      const data = e.response.data || {};
+      return data.error || undefined;
+    } else {
+      return undefined;
+    }
+  },
+
   ping() {
     const client = Client();
     client.get('ping').then(resp => {
     });
+  },
+
+  sources() {
+    const client = Client();
+    return client.get('sources').then(resp => resp.data);
   },
 
   users: {
@@ -57,7 +72,12 @@ const Api = {
       }
       return request;
     });
-    return client.get('/me').then(resp => resp.data).catch(e => null);
+    return client.get('/me').then(resp => resp.data).catch(e => {
+      if ((/invalid/i).test(Api.error(e))) {
+        Tokens.clear();
+      }
+      return null;
+    });
   },
 
   local: {

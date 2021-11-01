@@ -21,6 +21,7 @@ const Signup = () => {
   const onSubmit = (username, password) => {
     setError('');
     Api.users.create(username, password).then(resp => {
+      console.log('resp:', resp);
       if (resp.token) {
         if (resp.user) {
           Session.setUser(resp.user);

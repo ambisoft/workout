@@ -30,7 +30,12 @@ const users = (app) => {
       res.status(409).send({ error: 'Email already exists' });
     } else {
       const encryptedPassword = await bcrypt.hash(password, 10);
-      const user = { username: username.toLowerCase(), password: encryptedPassword };
+      const user = {
+        username: username.toLowerCase(),
+        first_name: '',
+        last_name: '',
+        password: encryptedPassword
+      };
       const guid = (await req.knex.insert(user).into('users').returning('guid'))[0];
       const token = jwt.sign(
         { user_id: guid },
@@ -38,10 +43,11 @@ const users = (app) => {
         { expiresIn: "30d" }
       );
       const serialized = {
-        guid: user.guid,
+        guid: guid,
         first_name: user.first_name,
         last_name: user.last_name
       }
+      console.log('serialized:', serialized);
       res.send({ guid, token, user: serialized });
     }
   });

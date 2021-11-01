@@ -6,6 +6,7 @@ const path = require('path');
 const database = require("./middleware/database");
 
 const Sessions = require('./routes/sessions').default;
+const Sources = require('./routes/sources').default;
 const Users = require('./routes/users').default;
 
 const Polar = require('../src/api/Polar').default;
@@ -30,6 +31,7 @@ app.use(express.json());
 
 // application routes
 Sessions(app);
+Sources(app);
 Users(app);
 
 app.get("/api/ping", (req, res) => {
