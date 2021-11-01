@@ -5,7 +5,7 @@ import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 
 import Contests from '../Contests';
-import Dashboard from '../Dashboard';
+import Dashboard from '../dashboard';
 import Home from '../Home';
 import Join from '../Join';
 import Login from '../login';

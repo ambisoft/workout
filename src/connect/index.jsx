@@ -6,8 +6,7 @@ import Api from '../api';
 import Oauth from './oauth';
 
 const style = {
-  minHeight: '100vh' ,
-  alignItems: 'center',
+  marginTop: 20,
   justifyContent: 'center'
 };
 
