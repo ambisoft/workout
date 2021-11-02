@@ -1,7 +1,10 @@
-const strava = require("../api/strava").default;
+const apis = {
+  strava: require("../api/strava").default
+};
+
 const database = require("../middleware/database");
 
-// Refresh expiring oauth access tokens
+// Refresh expired oauth access tokens
 console.log('Starting the job');
 
 const context = {};
@@ -22,13 +25,14 @@ database(context, null, async () => {
       const expired = rec.expires_at < now;
       if (expired) {
         try {
-          const resp = await strava.refresh(rec.details.refresh_token);
+          // TODO: only Strava for now but we can add more
+          const api = apis[rec.source_name.toLowerCase()];
+          const resp = await api.refresh(rec.details.refresh_token);
           const { expires_at, access_token, refresh_token } = resp.data;
-          const record = {
-            expires_at,
-            details: { access_token, refresh_token }
-          };
-          await knex('oauth_tokens').update(record).where({ guid: rec.guid });
+          const details = { access_token, refresh_token };
+          await knex('oauth_tokens')
+            .update({ expires_at, details, updated_at: knex.fn.now() })
+            .where({ guid: rec.guid });
         } catch (e) {
           console.log('error:', e);
         }
