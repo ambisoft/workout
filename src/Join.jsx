@@ -42,11 +42,11 @@ const Join = () => {
   return (
     <ThemeProvider theme={welcomeTheme}>
       <div className="welcome">
-        <Typography variant='h1' textAlign='center' margin={1}>
-          Yay! You're about to join our beta
+        <Typography variant='h1' textAlign='center' margin={2}>
+          /Join Workout.io&nbsp;β
         </Typography>
         <Typography variant='h3' textAlign='center' ml={1} mr={1}>
-          Hush hush - right now we are invite only
+          Hush hush - currently invite only
         </Typography>
         <Grid container mt={2} mb={3}>
           <Grid item xs={12} md={5} textAlign={{ xs: 'center', md: 'right' }}>
