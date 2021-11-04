@@ -28,7 +28,7 @@ class OauthTokens {
       .update({...data, updated_at: this.knex.fn.now() });
   }
 
-  async upsert(where) {
+  async upsert(where, record) {
     const exists = await this.findBy(where);
     if (exists) {
       await this.knex('oauth_tokens').update(record).where({ guid: exists.guid });

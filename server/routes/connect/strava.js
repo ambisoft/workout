@@ -13,11 +13,11 @@ const strava = (app) => {
       if (resp && resp.data) {
         const { athlete, expires_at, access_token, refresh_token } = resp.data;
         if (access_token) {
-          const source = new Sources(req.knex).findBy({ name: 'Strava' });
+          const source = await new Sources(req.knex).findBy({ name: 'Strava' });
           const details = { access_token, refresh_token };
           const where = { user_guid: req.user.guid, source_guid: source.guid };
           const record = { expires_at, details };
-          new OauthTokens(req.knex).upsert(where, record);
+          await new OauthTokens(req.knex).upsert(where, record);
         }
         if (athlete) {
         }
