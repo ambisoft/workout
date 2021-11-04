@@ -16,12 +16,12 @@ const styles = {
 
 const Form = ({ error, onSubmit }) => {
 
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const onSend = () => {
-    if ((username !== '') && (password !== '')) {
-      onSubmit(username, password);
+    if ((password !== '') && (passwordConfirmation !== '')) {
+      onSubmit(password, passwordConfirmation);
     }
   };
 
@@ -35,12 +35,12 @@ const Form = ({ error, onSubmit }) => {
     <Paper elevation={3}>
       <Box component="form" sx={styles} noValidate autoComplete="off">
         <Typography variant='h4'>
-          Sign in to GlobalRun
+          Set New Password
         </Typography>
 
         {error &&
         <Alert className='row' severity="error">
-            Invalid email or password
+          {error || 'Password reset error'}
         </Alert>}
 
         <div style={{ display: 'none' }}>
@@ -48,15 +48,6 @@ const Form = ({ error, onSubmit }) => {
           <input type='password' autoComplete='new-password' />
         </div>
 
-        <div className='row'>
-          <TextField
-            autoComplete="off"
-            id='username'
-            value={username.toLowerCase()}
-            onChange={e => setUsername(e.target.value)}
-            fullWidth
-            label="Email address" />
-        </div>
         <div className='row'>
           <TextField
             fullWidth
@@ -68,23 +59,30 @@ const Form = ({ error, onSubmit }) => {
             type='password'
             label="Password" />
         </div>
+
+        <div className='row'>
+          <TextField
+            fullWidth
+            autoComplete='new-password'
+            id='pwd-confirm'
+            onKeyUp={onKeyUp}
+            value={passwordConfirmation}
+            onChange={e => setPasswordConfirmation(e.target.value)}
+            type='password'
+            label="Password" />
+        </div>
         <Button
           className='row'
           size='large'
           fullWidth
           color='success'
-          onClick={onSend}
-          variant='contained'>Login</Button>
+          variant='contained'
+          onClick={onSend}>Set Password</Button>
         <Box className='row' textAlign='center'>
-          Don’t have an account?
+          Did you change your mind?
           &nbsp;
-          <Link component={RouterLink} to='/signup' underline='hover'>
-            Get started
-          </Link>
-        </Box>
-        <Box className='row' textAlign='center'>
-          <Link component={RouterLink} to='/password/forgotten' underline='hover'>
-            Forgotten Password?
+          <Link component={RouterLink} to='/login' underline='hover'>
+            Login here
           </Link>
         </Box>
       </Box>

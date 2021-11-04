@@ -24,6 +24,13 @@ const Api = {
     return client.get('sources').then(resp => resp.data);
   },
 
+  passwords: {
+    reset(email) {
+    },
+    update(password) {
+    }
+  },
+
   users: {
     create(username, password) {
       const client = Client();

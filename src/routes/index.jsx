@@ -9,6 +9,8 @@ import Dashboard from '../dashboard';
 import Home from '../Home';
 import Join from '../Join';
 import Login from '../login';
+import PasswordForgotten from '../password/forgotten';
+import PasswordReset from '../password/reset';
 import Signup from '../signup';
 
 import PolarConnect from '../connect/Polar';
@@ -21,6 +23,8 @@ const Routes = () => (
     <PublicRoute path="/join" component={Join} />
     <PublicRoute path="/login" component={Login} />
     <PublicRoute path="/signup" component={Signup} />
+    <PublicRoute path="/password/forgotten" component={PasswordForgotten} />
+    <PublicRoute path="/password/reset" component={PasswordReset} />
     <PrivateRoute path="/connect/polar" component={PolarConnect} />
     <PrivateRoute path="/connect/strava" component={StravaConnect} />
     <Route path="/" component={Home} />
