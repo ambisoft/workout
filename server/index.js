@@ -5,6 +5,7 @@ const path = require('path');
 
 const database = require("./middleware/database");
 
+const CapturedEmails = require('./routes/capturedEmails').default;
 const ConnectStrava = require('./routes/connect/strava').default;
 const Sessions = require('./routes/sessions').default;
 const Sources = require('./routes/sources').default;
@@ -31,6 +32,7 @@ app.use(database);
 app.use(express.json());
 
 // application routes
+CapturedEmails(app);
 ConnectStrava(app);
 Sessions(app);
 Sources(app);
