@@ -40,6 +40,7 @@ app.get("/api/ping", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
+// TODO: move to ConnectPolar
 app.post("/api/connect/polar/authorize", async (req, res) => {
   const code = req.body.code;
   const redirect_uri = req.body.redirect_uri;
@@ -47,6 +48,7 @@ app.post("/api/connect/polar/authorize", async (req, res) => {
   res.send(resp.data);
 });
 
+// TODO: move to ConnectPolar
 app.post("/api/connect/polar/exercises", async (req, res) => {
   const access_token = req.body.access_token;
   try {
@@ -60,6 +62,7 @@ app.post("/api/connect/polar/exercises", async (req, res) => {
   }
 });
 
+// TODO: move to ConnectPolar
 app.post("/api/connect/polar/activities", async (req, res) => {
   const access_token = req.body.access_token;
   const user_id = req.body.user_id;

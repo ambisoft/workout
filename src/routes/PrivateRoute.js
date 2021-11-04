@@ -9,8 +9,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const unknown = (user === undefined);
   const visitor = (user === null);
 
-  console.log('PrivateRoute: user is', user);
-
   return (
     <Route
       {...rest}

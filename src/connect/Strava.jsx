@@ -11,8 +11,9 @@ const StravaConnect = () => {
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
+    console.log('code:', code);
     if (code) {
-      Api.local.Strava.authorize(code).then(resp => {
+      Api.Strava.authorize(code).then(resp => {
         history.push('/dashboard');
         //const token = resp.data.access_token;
         //Api.Strava.activities(token).then(resp => setActivities(resp.data));

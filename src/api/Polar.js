@@ -2,6 +2,7 @@ const axios = require('axios').default;
 const url = require('url');
 
 const Polar = {
+  // TODO: move me to the server
   authorize(code, redirect_uri) {
     const endpoint = 'https://polarremote.com/v2/oauth2/token';
     const client_id = process.env.REACT_APP_POLAR_CLIENT_ID;

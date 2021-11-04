@@ -70,21 +70,17 @@ const Api = {
         const client = Client();
         return client.post('/connect/polar/authorize', { code, redirect_uri });
       },
+      // TODO: move me to the server
       activities(access_token, user_id) {
         const client = Client();
         return client.post('/connect/polar/activities', { access_token, user_id });
       },
+      // TODO: move me to the server
       exercises(access_token) {
         const client = Client();
         return client.post('/connect/polar/exercises', { access_token });
       },
     },
-    Strava: {
-      authorize(code) {
-        const client = Client();
-        return client.post('/connect/strava/authorize', { code });
-      },
-    }
   },
   Polar,
   Strava

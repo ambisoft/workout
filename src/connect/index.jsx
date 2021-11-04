@@ -16,6 +16,17 @@ const Connect = () => {
   // TODO: return "connected" status for each source
   useEffect(() => Api.sources().then(setSources), []);
 
+  // TEST: preload Strava activities
+  // - if works, move to connect/strava/Button'
+  // load/refresh activities - determines whether the token works or not
+
+  useEffect(() => {
+    console.log('load activities');
+    Api.Strava.activities().then(resp => {
+      console.log('resp:', resp);
+    });
+  }, [])
+
   return (
     <Grid container spacing={2} style={style}>
       {sources.map(source => (

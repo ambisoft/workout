@@ -1,8 +1,10 @@
 const apis = {
+  polar: require("../api/polar").default,
   strava: require("../api/strava").default
 };
 
 const database = require("../middleware/database");
+const OauthTokens = require('../models/oauthTokens').default;
 
 // Refresh expired oauth access tokens
 console.log('Starting the job');
@@ -10,13 +12,9 @@ console.log('Starting the job');
 const context = {};
 database(context, null, async () => {
   const { knex } = context;
-  const all = await knex
-    .select('*')
-    .select('oauth_tokens.guid as guid')
-    .select('oauth_tokens.details as details')
-    .table('oauth_tokens')
-    .join('sources', 'oauth_tokens.source_guid', 'sources.guid')
-    .select('sources.name as source_name', 'sources.details as source_details');
+
+  const tokens = new OauthTokens(knex);
+  const all = await tokens.findAllWithSources();
 
   for (let i = 0; i < all.length; i++) {
     const rec = all[i];
@@ -25,14 +23,11 @@ database(context, null, async () => {
       const expired = rec.expires_at < now;
       if (expired) {
         try {
-          // TODO: only Strava for now but we can add more
           const api = apis[rec.source_name.toLowerCase()];
           const resp = await api.refresh(rec.details.refresh_token);
           const { expires_at, access_token, refresh_token } = resp.data;
           const details = { access_token, refresh_token };
-          await knex('oauth_tokens')
-            .update({ expires_at, details, updated_at: knex.fn.now() })
-            .where({ guid: rec.guid });
+          await tokens.update({ guid: rec.guid }, { expires_at, details });
         } catch (e) {
           console.log('error:', e);
         }
