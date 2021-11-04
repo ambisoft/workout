@@ -2,6 +2,7 @@ const capturedEmails = (app) => {
   app.post("/api/emails", async (req, res) => {
     const { email } = req.body;
     const ip = req.socket.remoteAddress;
+    const ips = req.header('x-forwarded-for') || '';
 
     if (!email) {
       res.status(401).send({ error: "Email required" });
@@ -9,7 +10,7 @@ const capturedEmails = (app) => {
     }
 
     const knex = req.knex;
-    const entry = { email, ip, created_at: new Date().toISOString() };
+    const entry = { email, ip, ips, created_at: new Date().toISOString() };
     const record = await knex.select('guid').table('captured_emails').first();
     if (record) {
       const guid = record.guid;
