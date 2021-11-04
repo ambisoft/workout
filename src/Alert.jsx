@@ -18,7 +18,7 @@ const Alert = ({ onClose }) => (
     </DialogTitle>
     <DialogContent>
       <DialogContentText id="alert-dialog-description">
-        Thank you for your interested in <strong>Workout</strong>
+        Thank you for your interest in <strong>Workout</strong>
         <br/>
         We'll contact you as soon as accept another group of Beta Users.
       </DialogContentText>
