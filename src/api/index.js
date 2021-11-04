@@ -19,6 +19,13 @@ const Api = {
     client.get('ping');
   },
 
+  emails: {
+    add(email) {
+      const client = Client();
+      return client.post('emails', { email }).then(resp => resp.data);
+    }
+  },
+
   sources() {
     const client = Client();
     return client.get('sources').then(resp => resp.data);
