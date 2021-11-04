@@ -2,6 +2,7 @@ import React from "react";
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
@@ -10,15 +11,6 @@ import Alert from './Alert';
 import Api from './api';
 
 import welcomeTheme from './ui/themes/welcome';
-
-const styles = {
-  mt: '1em',
-  mb: '2em',
-  '& span': {
-    m: 2,
-    lineHeight: 2.5,
-  }
-};
 
 const Join = () => {
 
@@ -50,22 +42,28 @@ const Join = () => {
   return (
     <ThemeProvider theme={welcomeTheme}>
       <div className="welcome">
-        <Typography variant='h1' textAlign='center'>
-          Hooray! You're about to join our beta
+        <Typography variant='h1' textAlign='center' margin={1}>
+          Yay! You're about to join our beta
         </Typography>
-        <Typography variant='h3'>
+        <Typography variant='h3' textAlign='center' ml={1} mr={1}>
           Hush hush - right now we are invite only
         </Typography>
-        <Box sx={styles}>
-          <TextField id="access-code" label="Enter access code" />
-          <span> or </span>
-          <TextField
-            id="email"
-            value={email}
-            onChange={onChangeEmail}
-            onKeyUp={onKeyUp}
-            label="Leave your email" />
-        </Box>
+        <Grid container mt={2} mb={3}>
+          <Grid item xs={12} md={5} textAlign={{ xs: 'center', md: 'right' }}>
+            <TextField id="access-code" label="Enter access code" />
+          </Grid>
+          <Grid item xs={12} md={2} textAlign='center' padding={1}>
+            or
+          </Grid>
+          <Grid item xs={12} md={5} textAlign={{ xs: 'center', md: 'left' }}>
+            <TextField
+              id="email"
+              value={email}
+              onChange={onChangeEmail}
+              onKeyUp={onKeyUp}
+              label="Leave your email" />
+          </Grid>
+        </Grid>
         <Button variant="contained" color='success' size='large' onClick={onSend}>
           Submit
         </Button>

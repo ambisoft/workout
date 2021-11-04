@@ -35,7 +35,7 @@ const Form = ({ error, onSubmit }) => {
     <Paper elevation={3}>
       <Box component="form" sx={styles} noValidate autoComplete="off">
         <Typography variant='h4'>
-          Sign in to GlobalRun
+          Sign in to Workout
         </Typography>
 
         {error &&
