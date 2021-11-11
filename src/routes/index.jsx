@@ -1,5 +1,5 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, Switch, Route } from "react-router-dom";
 
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
@@ -14,7 +14,19 @@ import Signup from '../signup';
 import PolarConnect from '../connect/Polar';
 import StravaConnect from '../connect/Strava';
 
-const Routes = () => (
+const Routes = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const page_path = location ? location.pathname : '';
+    const gaId = process.env.REACT_APP_GA_SITE_ID;
+    console.log('gaId:', gaId, 'window.gtag', window.gtag, page_path);
+    if (window.gtag && gaId) {
+      window.gtag("config", gaId, { page_path });
+    }
+  }, [location]);
+
+  return (
   <Switch>
     <Route path="/contests" component={Contests} />
     <PrivateRoute path="/dashboard" component={Dashboard} />
@@ -25,6 +37,7 @@ const Routes = () => (
     <PrivateRoute path="/connect/strava" component={StravaConnect} />
     <Route path="/" component={Home} />
   </Switch>
-);
+  );
+};
 
 export default Routes;
